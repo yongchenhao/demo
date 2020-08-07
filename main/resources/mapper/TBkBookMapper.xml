@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.TBkBookMapper">
+
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.example.entity.TBkBookDto">
+        <result column="id" property="id" />
+        <result column="course_no" property="courseNo" />
+        <result column="name" property="name" />
+        <result column="cover_img" property="coverImg" />
+        <result column="type_id" property="typeId" />
+        <result column="genre_id" property="genreId" />
+        <result column="read_points" property="readPoints" />
+        <result column="bl_val" property="blVal" />
+        <result column="author" property="author" />
+        <result column="translator" property="translator" />
+        <result column="publisher" property="publisher" />
+        <result column="total" property="total" />
+        <result column="quiz_question_total" property="quizQuestionTotal" />
+        <result column="grade_min" property="gradeMin" />
+        <result column="grade_max" property="gradeMax" />
+        <result column="introduction" property="introduction" />
+        <result column="status" property="status" />
+        <result column="create_by" property="createBy" />
+        <result column="create_date" property="createDate" />
+        <result column="update_by" property="updateBy" />
+        <result column="update_date" property="updateDate" />
+        <result column="show_type" property="showType" />
+        <result column="suggest_tip" property="suggestTip" />
+        <result column="idcode" property="idcode" />
+        <result column="theme_name" property="themeName" />
+        <result column="genre_name" property="genreName" />
+    </resultMap>
+
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,
+        course_no, name, cover_img, type_id, genre_id, read_points, bl_val, author, translator, publisher, total, quiz_question_total, grade_min, grade_max, introduction, status, create_by, create_date, update_by, update_date, show_type, suggest_tip, idcode
+    </sql>
+    <select id="queryBook" resultType="com.example.entity.TBkBookDto">
+    select t.id,t.name,t.author,
+    (select ta.name from t_dict_genre ta where ta.id=t.genre_id) genre_name,
+    (select GROUP_CONCAT(tc.name) FROM tl_book_theme_re tb,t_dict_theme tc where tb.theme_id = tc.id and t.id = tb.book_id) theme_name
+    from t_bk_book t
+    </select>
+    <select id="quertBookQuiz" resultType="com.example.entity.TBkBookDto">
+
+    </select>
+</mapper>
